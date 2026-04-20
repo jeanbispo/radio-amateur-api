@@ -1,10 +1,11 @@
 import Elysia from "elysia";
+import { API_V1_PREFIX } from "../lib/api";
 import { fetchSolarData } from "../services/solar-terrestrial";
 
 export const CDN_CACHE_CONTROL =
   "public, s-maxage=3600, stale-while-revalidate=600";
 
-export const solarTerrestrialRoute = new Elysia().get(
+export const solarTerrestrialRoute = new Elysia({ prefix: API_V1_PREFIX }).get(
   "/solar-terrestrial",
   async () => {
     try {

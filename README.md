@@ -6,8 +6,25 @@ General-purpose API for amateur radio operators. It consumes, transforms, and ex
 
 | Feature | Route | Data Source |
 |---------|-------|-------------|
-| Solar Terrestrial Data | `GET /solar-terrestrial` | [Paul - N0NBH](https://www.hamqsl.com/solar.html) |
-| Health Check | `GET /health` | Internal |
+| API Info | `GET /api/v1` | Internal |
+| Solar Terrestrial Data | `GET /api/v1/solar-terrestrial` | [Paul - N0NBH](https://www.hamqsl.com/solar.html) |
+| Health Check | `GET /api/v1/health` | Internal |
+
+## API Versioning
+
+The API currently exposes versioned routes only under `v1`.
+
+- Base path: `GET /api/v1`
+- Health check: `GET /api/v1/health`
+- Solar terrestrial data: `GET /api/v1/solar-terrestrial`
+
+## API Info
+
+Returns API metadata, current application version, and the list of available `v1` endpoints.
+
+```bash
+curl https://<your-domain>/api/v1
+```
 
 ## Solar Terrestrial Data
 
@@ -16,7 +33,7 @@ Returns JSON derived from the upstream XML with solar activity and radio propaga
 **Usage example:**
 
 ```bash
-curl https://<your-domain>/solar-terrestrial
+curl https://<your-domain>/api/v1/solar-terrestrial
 ```
 
 ## Health Check
@@ -24,7 +41,7 @@ curl https://<your-domain>/solar-terrestrial
 Returns the API status and the current timestamp.
 
 ```bash
-curl https://<your-domain>/health
+curl https://<your-domain>/api/v1/health
 ```
 
 ## Project Structure
@@ -32,14 +49,14 @@ curl https://<your-domain>/health
 ```
 src/
 ├── index.ts                        # Entry point — exports the app
-├── app.ts                          # Elysia configuration and route registration
 ├── lib/
+│   ├── api.ts                      # Shared API version prefix
 │   └── cache.ts                    # Cache utilities (getCache/setCache)
 ├── services/
 │   └── solar-terrestrial.ts        # Upstream fetch and parsing logic
 └── routes/
-    ├── health.ts                   # GET /health route
-    └── solar-terrestrial.ts        # GET /solar-terrestrial-data route
+    ├── health.ts                   # GET /api/v1/health route
+    └── solar-terrestrial.ts        # GET /api/v1/solar-terrestrial route
 ```
 
 ## Cache
@@ -61,7 +78,7 @@ vc dev
 ```
 
 ```bash
-open http://localhost:3000/solar-terrestrial
+open http://localhost:3000/api/v1/solar-terrestrial
 ```
 
 ## Deploy
