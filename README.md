@@ -1,19 +1,19 @@
 # Radio Amateur API
 
-API generalista para radioamadores. Consome, transforma e disponibiliza dados relevantes para a prática do radioamadorismo.
+General-purpose API for amateur radio operators. It consumes, transforms, and exposes data relevant to amateur radio operations.
 
-## Recursos
+## Features
 
-| Recurso | Rota | Origem dos Dados |
-|---------|------|------------------|
+| Feature | Route | Data Source |
+|---------|-------|-------------|
 | Solar Terrestrial Data | `GET /solar-terrestrial-data` | [Paul - N0NBH](https://www.hamqsl.com/solar.html) |
-| Health Check | `GET /health` | Interno |
+| Health Check | `GET /health` | Internal |
 
 ## Solar Terrestrial Data
 
-Retorna JSON derivado do XML upstream com dados de atividade solar e condições de propagação de radio.
+Returns JSON derived from the upstream XML with solar activity and radio propagation data.
 
-**Exemplo de uso:**
+**Usage example:**
 
 ```bash
 curl https://<your-domain>/solar-terrestrial-data
@@ -21,37 +21,37 @@ curl https://<your-domain>/solar-terrestrial-data
 
 ## Health Check
 
-Retorna o status da API e o timestamp atual.
+Returns the API status and the current timestamp.
 
 ```bash
 curl https://<your-domain>/health
 ```
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 src/
-├── index.ts                        # Entry point — exporta o app
-├── app.ts                          # Configuração do Elysia e registro de rotas
+├── index.ts                        # Entry point — exports the app
+├── app.ts                          # Elysia configuration and route registration
 ├── lib/
-│   └── cache.ts                    # Utilitários de cache (getCache/setCache)
+│   └── cache.ts                    # Cache utilities (getCache/setCache)
 ├── services/
-│   └── solar-terrestrial.ts        # Lógica de fetch e parsing do upstream
+│   └── solar-terrestrial.ts        # Upstream fetch and parsing logic
 └── routes/
-    ├── health.ts                   # Rota GET /health
-    └── solar-terrestrial.ts        # Rota GET /solar-terrestrial-data
+    ├── health.ts                   # GET /health route
+    └── solar-terrestrial.ts        # GET /solar-terrestrial-data route
 ```
 
 ## Cache
 
-Duas camadas de cache evitam hits desnecessários ao upstream:
+Two cache layers avoid unnecessary hits to the upstream:
 
-| Camada | Mecanismo | TTL |
-|--------|-----------|-----|
-| **CDN** | `Cache-Control: public, s-maxage=3600, stale-while-revalidate=600` | 1 h no edge Vercel, +10 min stale |
-| **Runtime** | [`@vercel/functions`](https://vercel.com/docs/caching/runtime-cache) — `getCache()` com TTL de 3600 s | 1 h (persistido pela infraestrutura Vercel) |
+| Layer | Mechanism | TTL |
+|-------|-----------|-----|
+| **CDN** | `Cache-Control: public, s-maxage=3600, stale-while-revalidate=600` | 1 h on the Vercel edge, +10 min stale |
+| **Runtime** | [`@vercel/functions`](https://vercel.com/docs/caching/runtime-cache) — `getCache()` with a TTL of 3600 s | 1 h (persisted by the Vercel infrastructure) |
 
-O cache de runtime usa a API oficial de Runtime Cache da Vercel (`getCache` do pacote `@vercel/functions`), que persiste entre cold starts ao contrário de cache em memória. O cache CDN cobre a camada compartilhada no edge.
+The runtime cache uses Vercel's official Runtime Cache API (`getCache` from the `@vercel/functions` package), which persists across cold starts unlike in-memory cache. The CDN cache covers the shared edge layer.
 
 ## Development
 
