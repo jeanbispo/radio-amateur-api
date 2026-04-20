@@ -6,7 +6,7 @@ const app = new Elysia()
   .get("/", () => ({
     name: "Radio Amateur API",
     version: "1.0.50",
-    endpoints: ["/health", "/solar-terrestrial-data"],
+    endpoints: ["/health", "/solar-terrestrial"],
   }))
   .use(healthRoute)
   .use(solarTerrestrialRoute);

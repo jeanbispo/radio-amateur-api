@@ -6,7 +6,7 @@ General-purpose API for amateur radio operators. It consumes, transforms, and ex
 
 | Feature | Route | Data Source |
 |---------|-------|-------------|
-| Solar Terrestrial Data | `GET /solar-terrestrial-data` | [Paul - N0NBH](https://www.hamqsl.com/solar.html) |
+| Solar Terrestrial Data | `GET /solar-terrestrial` | [Paul - N0NBH](https://www.hamqsl.com/solar.html) |
 | Health Check | `GET /health` | Internal |
 
 ## Solar Terrestrial Data
@@ -16,7 +16,7 @@ Returns JSON derived from the upstream XML with solar activity and radio propaga
 **Usage example:**
 
 ```bash
-curl https://<your-domain>/solar-terrestrial-data
+curl https://<your-domain>/solar-terrestrial
 ```
 
 ## Health Check
@@ -61,7 +61,7 @@ vc dev
 ```
 
 ```bash
-open http://localhost:3000/solar-terrestrial-data
+open http://localhost:3000/solar-terrestrial
 ```
 
 ## Deploy
