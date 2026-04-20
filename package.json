@@ -1,0 +1,18 @@
+{
+  "name": "radio-amateur-api",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@vercel/functions": "^3.4.3",
+    "elysia": "latest",
+    "fast-xml-parser": "^5.7.1"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "typescript": "^5.9.3"
+  }
+}
